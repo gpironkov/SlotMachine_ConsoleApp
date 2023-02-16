@@ -8,16 +8,21 @@ namespace SlotMachine
 {
     internal class Calculations
     {
-        private Factory factory = new Factory();
+        private static Factory factory = new Factory();
+
+        Symbol apple = factory.SymbolA;
+        Symbol banana = factory.SymbolB;
+        Symbol pineapple = factory.SymbolP;
+        Symbol wildcard = factory.SymbolW;
 
         internal float SumSymbolsCoefficient(Symbol first, Symbol second, Symbol third, List<char> row)
         {
             var sumOfElements = 0f;
 
-            var apple = factory.SymbolA;
-            var banana = factory.SymbolB;
-            var pineapple = factory.SymbolP;
-            var wildcard = factory.SymbolW;
+            //var apple = factory.SymbolA;
+            //var banana = factory.SymbolB;
+            //var pineapple = factory.SymbolP;
+            //var wildcard = factory.SymbolW;
 
             var matchAll = first.Name == second.Name && second.Name == third.Name;
             if (matchAll)
@@ -47,21 +52,21 @@ namespace SlotMachine
             Random random = new Random();
             int randomNum = random.Next(1, 101);
 
-            if (randomNum <= factory.SymbolA.Probability)
+            if (randomNum <= apple.Probability)
             {
-                return factory.SymbolA;
+                return apple;
             }
-            else if (randomNum <= factory.SymbolA.Probability + factory.SymbolB.Probability)
+            else if (randomNum <= apple.Probability + banana.Probability)
             {
-                return factory.SymbolB;
+                return banana;
             }
-            else if (randomNum <= factory.SymbolA.Probability + factory.SymbolB.Probability + factory.SymbolP.Probability)
+            else if (randomNum <= apple.Probability + banana.Probability + pineapple.Probability)
             {
-                return factory.SymbolP;
+                return pineapple;
             }
             else
             {
-                return factory.SymbolW;
+                return wildcard;
             }
         }
     }

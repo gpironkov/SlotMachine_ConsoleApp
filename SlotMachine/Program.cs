@@ -1,17 +1,19 @@
 ﻿using SlotMachine;
 
-float depositAmount = 0;
-float stake = 1;
-float totalBalance = 1;
-float startedStake = 0;
+decimal depositAmount = 0;
+decimal stake = 1;
+decimal totalBalance = 1;
+decimal startedStake = 0;
 bool isStakeChanged = false;
 
 while (depositAmount < stake)
 {
     Console.WriteLine("Please deposit money you would like to play with:");
-    depositAmount = float.Parse(Console.ReadLine());
+    depositAmount = ValidateInput(depositAmount);
+
     Console.WriteLine("Enter stake amount:");
-    stake = int.Parse(Console.ReadLine());
+    stake = ValidateInput(stake);
+
     Console.WriteLine();
     if(depositAmount < stake)
         Console.WriteLine("Stake amount has to be less than or equal to the deposit!");
@@ -22,30 +24,14 @@ while (depositAmount < stake)
 while (totalBalance > 0)
 {
     var calc = new Calculations();
-    var symboltList = new List<Symbol>();
+    var symbols = new List<Symbol>();
         
-    var calcSumCoeff = 0f;
-    for (int i = 0; i < 4; i++)
-    {
-        for (int j = 0; j < 3; j++)
-        {
-            var symbol = calc.CalcSymbolsProbability();
-            symboltList.Add(symbol);
-            Console.Write(symbol.Name);
-        }
-
-        var names = symboltList.Select(x => x.Name).ToList();
-
-        calcSumCoeff += calc.SumSymbolsCoefficient(symboltList[0], symboltList[1], symboltList[2], names);
-
-        symboltList.Clear();
-        Console.WriteLine();
-    }
+    var calcSumCoeff = calc.CalculateCoefficient(symbols); 
 
     var winAmount = calcSumCoeff * stake;
     totalBalance = depositAmount - stake + winAmount;
     Console.WriteLine();
-    //Console.WriteLine($"Sumarno koeficienta e {calcSum}");
+
     Console.WriteLine($"You have won: {winAmount}");
     // totalBalamce > 0 ? func(totalBalamce, stake) : GameEnded();
     if (totalBalance > 0)
@@ -78,6 +64,32 @@ while (totalBalance > 0)
         break;
     }
 }
+
+decimal ValidateInput(decimal validNum)
+{
+    validNum = 0;
+
+    bool isInputValid = false;
+
+    while (!isInputValid)
+    {
+        string inputText = Console.ReadLine();
+
+        bool isFirstNumberValid = decimal.TryParse(inputText, out validNum);
+
+        if (isFirstNumberValid)
+        {
+            isInputValid = true;            
+        }
+        else
+        {
+            Console.WriteLine("Invalid input. Please enter valid number.");
+        }        
+    }
+
+    return validNum;
+}
+
 
 //static float CheckStakeValue(float stake, float totalBalance, float startedStake, bool isStakeChanged)
 //{

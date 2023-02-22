@@ -15,14 +15,33 @@ namespace SlotMachine
         Symbol pineapple = factory.SymbolP;
         Symbol wildcard = factory.SymbolW;
 
-        internal float SumSymbolsCoefficient(Symbol first, Symbol second, Symbol third, List<char> row)
+        internal decimal CalculateCoefficient(List<Symbol> symbols)
         {
-            var sumOfElements = 0f;
+            var calcSumCoeff = 0m;
 
-            //var apple = factory.SymbolA;
-            //var banana = factory.SymbolB;
-            //var pineapple = factory.SymbolP;
-            //var wildcard = factory.SymbolW;
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    var symbol = CalcSymbolsProbability();
+                    symbols.Add(symbol);
+                    Console.Write(symbol.Name);
+                }
+
+                var names = symbols.Select(x => x.Name).ToList();
+
+                calcSumCoeff += SumSymbolsCoefficient(symbols[0], symbols[1], symbols[2], names);
+
+                symbols.Clear();
+                Console.WriteLine();
+            }
+
+            return calcSumCoeff;
+        }
+
+        private decimal SumSymbolsCoefficient(Symbol first, Symbol second, Symbol third, List<char> row)
+        {
+            var sumOfElements = 0m;
 
             var matchAll = first.Name == second.Name && second.Name == third.Name;
             if (matchAll)
@@ -45,9 +64,9 @@ namespace SlotMachine
             sumOfElements = first.Coefficient + second.Coefficient + third.Coefficient;
 
             return sumOfElements;
-        }
+        }        
 
-        internal Symbol CalcSymbolsProbability()
+        private Symbol CalcSymbolsProbability()
         {
             Random random = new Random();
             int randomNum = random.Next(1, 101);

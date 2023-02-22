@@ -12,12 +12,12 @@ namespace SlotMachine
     {
         internal char Name { get; set; }
 
-        internal float Coefficient { get; set; }
+        internal decimal Coefficient { get; set; }
 
         //[Range(1, 100, ErrorMessage = "Probability value must be between 1 and 100")]
         internal int Probability { get; set; }
 
-        internal Symbol(char name, float coefficient, int probability)
+        internal Symbol(char name, decimal coefficient, int probability)
         {
             this.Name = name;
             this.Coefficient = coefficient;

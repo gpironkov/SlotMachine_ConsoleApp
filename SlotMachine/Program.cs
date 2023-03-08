@@ -77,13 +77,13 @@ decimal ValidateInput(decimal validNum)
 
         bool isFirstNumberValid = decimal.TryParse(inputText, out validNum);
 
-        if (isFirstNumberValid)
+        if (isFirstNumberValid && validNum > 0)
         {
             isInputValid = true;            
         }
         else
         {
-            Console.WriteLine("Invalid input. Please enter valid number.");
+            Console.WriteLine("Invalid input. Please enter valid number, bigger than 0.");
         }        
     }
 

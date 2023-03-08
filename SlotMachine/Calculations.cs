@@ -8,7 +8,7 @@ namespace SlotMachine
 {
     internal class Calculations
     {
-        private static Factory factory = new Factory();
+        private static Factory factory = new();
 
         Symbol apple = factory.SymbolA;
         Symbol banana = factory.SymbolB;
